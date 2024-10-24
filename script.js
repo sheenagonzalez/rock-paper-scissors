@@ -102,14 +102,17 @@ function playGame() {
   }
 
   // Show game results
+  let message = "";
   console.log("** GAME OVER **");
   if (humanScore > computerScore) {
-    console.log(`RESULT: You won! The final score is ${humanScore} - ${computerScore}.`);
+    message = `RESULT: You won! The final score is ${humanScore} - ${computerScore}.`;
   } else if (computerScore > humanScore) {
-      console.log(`RESULT: You lose! The final score is ${humanScore} - ${computerScore}.`);
+      message = `RESULT: You lose! The final score is ${humanScore} - ${computerScore}.`;
   } else {
-    console.log(`RESULT: It's a tie! The final score is ${humanScore} - ${computerScore}.`);
+    message = `RESULT: It's a tie! The final score is ${humanScore} - ${computerScore}.`;
   }
+  console.log(message);
+  alert(message);
 
   return;
 }
