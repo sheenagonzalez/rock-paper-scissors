@@ -1,0 +1,131 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  font-size: 16px;
+  background-color: antiquewhite;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: "Tsukimi Rounded";
+  font-weight: bold;
+  font-size: 4.25rem;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-top: 3rem;
+}
+
+.choice-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
+  width: 15rem;
+  height: 15rem;
+  padding: 2rem;
+  border: 0.25rem solid black;
+  border-radius: 2rem;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.choice-img {
+  width: 6rem;
+  height: 6rem;
+}
+
+.choice-label {
+  font-size: 1.5rem;
+  font-weight: medium;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.choice-btn:hover {
+  transform: scale(1.1);
+}
+
+.scoreboard {
+  margin-top: 3rem;
+}
+
+.scoreboard-heading {
+  font-family: "Tsukimi Rounded", sans-serif;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.scoreboard-table {
+  column-gap: 2rem;
+  background-color: rgb(255, 244, 230);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 0.5rem;
+}
+
+.scoreboard-table th,
+.scoreboard-table td {
+  padding-right: 2rem;
+}
+
+.scoreboard-table th {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.round-score {
+  text-align: center;
+}
+
+.contestant {
+  text-align: left;
+  padding-right: 2rem;
+}
+
+.results-message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.play-again {
+  background-color: black;
+  color: white;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  font-family: "Tsukimi Rounded", sans-serif;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.play-again:hover {
+  background-color: rgb(85, 85, 85);
+  text-decoration: underline;
+  transform: scale(1.05);
+}
