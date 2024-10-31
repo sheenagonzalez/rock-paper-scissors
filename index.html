@@ -4,9 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock, Paper, Scissors</title>
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Tsukimi+Rounded&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  
+  <div class="container">
+    <h1 class="title">Rock, Paper, Scissors!</h1>
+    <ul class="choices">
+      <li>
+        <button id="rock" class="choice-btn">
+          <img class="choice-img" src="./img/hand-back-fist-regular.svg" alt="Rock"/>
+          <span class="choice-label">rock</span>
+        </button>
+      </li>
+      <li>
+        <button id="paper" class="choice-btn">
+          <img class="choice-img" src="./img/hand-regular.svg" alt="Paper"/>
+          <span class="choice-label">paper</span>
+        </button>
+      </li>
+      <li>
+        <button id="scissors" class="choice-btn">
+          <img class="choice-img" src="./img/hand-scissors-regular.svg" alt="Scissors"/>
+          <span class="choice-label">scissors</span>
+        </button>
+      </li>
+    </ul>
+    <p class="results-message"></p>
+    <div class="scoreboard">
+      <h2 class="scoreboard-heading">Scoreboard</h2>
+      <table class="scoreboard-table">
+        <tr class="rounds">
+          <th></th>
+          <th class="round-header">Round 1</th>
+          <th class="round-header">Round 2</th>
+          <th class="round-header">Round 3</th>
+          <th class="round-header">Round 4</th>
+          <th class="round-header">Round 5</th>
+          <th>Total</th>
+        </tr>
+        <tr class="human">
+          <th class="contestant">You</th>
+          <td class="round-score round-1">-</td>
+          <td class="round-score round-2">-</td>
+          <td class="round-score round-3">-</td>
+          <td class="round-score round-4">-</td>
+          <td class="round-score round-5">-</td>
+          <th class="total-score">-</th>
+        </tr>
+        <tr class="computer">
+          <th class="contestant">Computer</th>
+          <td class="round-score round-1">-</td>
+          <td class="round-score round-2">-</td>
+          <td class="round-score round-3">-</td>
+          <td class="round-score round-4">-</td>
+          <td class="round-score round-5">-</td>
+          <th class="total-score">-</th>
+        </tr>
+      </table>
+    </div>
+  </div>
 </body>
 </html>
