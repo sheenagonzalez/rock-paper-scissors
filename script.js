@@ -16,27 +16,17 @@ function getComputerChoice() {
 }
 
 /** Take the user's choice and return it */
-function getHumanChoice() {
-  // Prompt the user for input and save it to a variable
-  // Make the input case insensitive
-  let userInput = prompt("Rock, paper, or scissors?");
-  // Check if input is "rock", "paper", or "scissors"
-  // Otherwise, alert the user and prompt again
-  if (!(userInput == "rock" || userInput == "paper" || userInput == "scissors")) {
-    alert("Choose 'rock', 'paper', or 'scissors'.");
-    return getHumanChoice();
-  }
-  // Return user input
-  return userInput;
+function getHumanChoice(choice) {
+  return choice.querySelector('.choice-label').innerText.toLowerCase();;
 }
 
 /** Play 5 rounds */
 function playGame() {
-
-  /** Keep track of player's and computer's scores */
-  // Create variables for humanScore and computerScore and set both to initial value of 0
+  const numRounds = 5;
   let humanScore = 0;
   let computerScore = 0;
+  let currRound = 1;
+  let humanSelection, computerSelection = "";
   
   /** Play a single round 
    * Take in two parameters humanChoice and computerChoice
@@ -44,75 +34,108 @@ function playGame() {
   */
   function playRound(humanChoice, computerChoice) {
 
-    // STEP 1: Determine winner and track score
+    // Determine winner and update score variables
     let winner = "";
-    // If humanChoice equals computerChoice, then announce a tie; score stays the same
     if (humanChoice == computerChoice) {
       winner = "tie";
-    // If humanChoice beats computerChoice (paper beats rock, rock beats scissors, scissors beat paper), human wins
     } else if ((humanChoice == "paper" && computerChoice == "rock") || (humanChoice == "rock" && computerChoice == "scissors") || (humanChoice == "scissors" && computerChoice == "paper")) {
-      // Increment humanScore by 1
       humanScore++;
       winner = "human";
-    // Else, computer wins
     } else {
-      // Increment computerScore by 1
       computerScore++;
       winner = "computer";
     }
 
-    // STEP 2: Display message announcing winner
-    // Capitalize first letter of choices
+    // Store round result announcement and update scoreboard UI
     humanChoice = capitalize(humanChoice);
     computerChoice = capitalize(computerChoice);
-    // Create message variable and initialize to empty string
     let message = "";
+    let humanRoundResult = document.querySelector(`.human .round-${currRound}`);
+    let computerRoundResult = document.querySelector(`.computer .round-${currRound}`);
+
     if (winner == "human") {
-      // Announce human as winner
       message = `You win! ${humanChoice} beats ${computerChoice}.`
+      humanRoundResult.innerText = '+1';
+      humanRoundResult.style.color = 'green';
+      computerRoundResult.innerText = '0';
+      computerRoundResult.style.color = 'red';
     } else if (winner == "computer") {
-      // Announce computer as winner
       message = `You lose! ${computerChoice} beats ${humanChoice}.`;
-    // Announce a tie
+      humanRoundResult.innerText = '0';
+      humanRoundResult.style.color = 'red';
+      computerRoundResult.innerText = '+1';computerRoundResult.style.color = 'green';
     } else if (winner == "tie") {
       message = `It's a tie! You both chose ${humanChoice}.`;
+      humanRoundResult.innerText = 'Tie';
+      computerRoundResult.innerText = 'Tie';
+      humanRoundResult.style.color = 'gray';
+      computerRoundResult.style.color = 'gray';
     }
-    alert(message);
-    console.log(message);
-    
-    return;
+
+    return message;
   }
 
-  /** Call playRound five times */
-  // Create numRounds variable set to number of rounds, which is 5
-  let numRounds = 5;
-  let humanSelection, computerSelection = "";
-  // Iterate through every round, get choices, play a round and track score
-  for (let currRound = 1; currRound <= numRounds; currRound++) {
-    // Show current round 
-    console.log(`** ROUND ${currRound} **`);
-    // Get human and computer choices
-    humanSelection = getHumanChoice();
-    computerSelection = getComputerChoice();
-    // Play a round
-    playRound(humanSelection, computerSelection);
-    // Show current scores
-    console.log("You: ", humanScore);
-    console.log("Computer: ", computerScore);
+  /** Remove choice buttons and display game over screen with final results, scoreboard, and a button to 'Play Again' */
+  function announceResults() {
+    // Replace title with 'Game Over'
+    const title = document.querySelector('.title');
+    title.innerText = 'Game Over!';
+
+    // Remove choice buttons
+    const container = document.querySelector('.container');
+    const choices = document.querySelector('.choices');
+    container.removeChild(choices);
+
+    // Announce game results
+    const finalMessage = document.querySelector('.results-message');
+    if (humanScore > computerScore) {
+      finalMessage.innerText = `RESULT: You won! The final score is ${humanScore} - ${computerScore}.`;
+      finalMessage.style.color = 'green';
+    } else if (computerScore > humanScore) {
+      finalMessage.innerText = `RESULT: You lose! The final score is ${humanScore} - ${computerScore}.`;
+      finalMessage.style.color = 'red';
+    } else {
+      finalMessage.innerText = `RESULT: It's a tie! The final score is ${humanScore} - ${computerScore}.`;
+      finalMessage.style.color = 'gray';
+    }
+    finalMessage.style.fontSize = '2rem';
+    finalMessage.style.fontFamily = 'Tsukimi Rounded, sans-serif';
+
+    // Create button to play again
+    const playAgain = document.createElement('button');
+    playAgain.innerText = 'Play Again?';
+    playAgain.addEventListener('click', () => {
+      window.location.reload();
+    })
+    playAgain.classList.add('play-again');
+    container.appendChild(playAgain);
   }
 
-  // Show game results
-  let message = "";
-  console.log("** GAME OVER **");
-  if (humanScore > computerScore) {
-    message = `RESULT: You won! The final score is ${humanScore} - ${computerScore}.`;
-  } else if (computerScore > humanScore) {
-      message = `RESULT: You lose! The final score is ${humanScore} - ${computerScore}.`;
-  } else {
-    message = `RESULT: It's a tie! The final score is ${humanScore} - ${computerScore}.`;
-  }
-  console.log(message);
-  alert(message);
+  /** Add event listener to the buttons that call playRound function with the correct playerSelection every time a button is clicked */
+  const choiceBtns = document.querySelectorAll('.choice-btn');
+
+  choiceBtns.forEach(function (choice) {
+    choice.addEventListener('click', (e) => {
+      // Get choices and play round
+      humanSelection = getHumanChoice(choice);
+      computerSelection = getComputerChoice();
+      let message = playRound(humanSelection, computerSelection, currRound);
+
+      // Update total scores
+      const humanTotalScore = document.querySelector('.human .total-score');
+      humanTotalScore.innerText = humanScore;
+      const computerTotalScore = document.querySelector('.computer .total-score');
+      computerTotalScore.innerText = computerScore;
+      const roundMessage = document.querySelector('.results-message');
+      roundMessage.innerText = message;
+
+      if (currRound === numRounds) {
+        announceResults();
+      }
+
+      currRound++;
+    });
+  });
 
   return;
 }
@@ -126,3 +149,7 @@ function capitalize(str) {
 }
 
 playGame();
+
+/** Add a div for displaying results and change all console.logs into DOM methods */
+
+/** Display the running score, and announce a winner of the game once one player reaches 5 points */
